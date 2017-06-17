@@ -88,6 +88,13 @@ export const routes = [
     page: 'bonus'
   },
   {
+    path: 'by-the-way',
+    loadChildren: './by-the-way/by-the-way.module#ByTheWayModule',
+    name: 'By The Way... (Optional)',
+    description: 'Angular Services, ngIf/Else',
+    page: 'bonus'
+  },
+  {
     path: 'feedback-page',
     loadChildren: './feedback-page/feedback-page.module#FeedbackPageModule'
   },
