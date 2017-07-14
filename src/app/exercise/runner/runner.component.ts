@@ -14,10 +14,10 @@ import * as ts from 'typescript';
 import { FileConfig } from '../interfaces/file-config';
 import { LoopProtectionService } from '../services/loop-protection.service';
 import { ScriptLoaderService } from '../services/script-loader.service';
-declare const require;
 import * as babylon from 'babylon';
 import * as babel_types from 'babel-types';
 import babel_traverse from 'babel-traverse';
+declare const require;
 
 function jsScriptInjector(iframe) {
   return function (code) {
@@ -312,11 +312,11 @@ export class RunnerComponent implements AfterViewInit, OnChanges, OnDestroy {
       injectIframe(this.runnerElement.nativeElement, {
         id: 'preview', 'url': 'about:blank'
       }, this).then((sandbox) => {
+        sandbox.injectSystemJs();
         sandbox.runCss(require('./inner.css'));
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
-        sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
         sandbox.loadSystemJS('ng-bundle');
         sandbox.register('reflect-metadata', Reflect);
@@ -326,12 +326,12 @@ export class RunnerComponent implements AfterViewInit, OnChanges, OnDestroy {
       injectIframe(this.runnerElement.nativeElement, {
         id: 'testing', 'url': 'about:blank'
       }, this).then((sandbox) => {
+        sandbox.injectSystemJs();
         sandbox.runCss(require('./inner.css'));
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
-        sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('test-bootstrap'));
@@ -408,5 +408,4 @@ export class RunnerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   }
 }
-
 
